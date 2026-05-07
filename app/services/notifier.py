@@ -3,6 +3,7 @@ import logging
 import uuid
 
 from app.clients.redis_client import get_redis
+from app.services.demo_leaderboard import update_registered_player_balance
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +25,7 @@ async def notify_balance_update(
             "coins": coins,
             "action": action,
         })
+        await update_registered_player_balance(user_id, points, coins)
         await redis.publish(channel, message)
         logger.debug("Published balance update to %s: %s", channel, message)
     except Exception:

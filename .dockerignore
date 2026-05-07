@@ -1,0 +1,11 @@
+.cursor/
+.git/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+*.pyo
+*.log
+.DS_Store
+.env
+.venv/
+venv/

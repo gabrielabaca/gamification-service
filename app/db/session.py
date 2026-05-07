@@ -5,10 +5,18 @@ from sqlalchemy.orm import declarative_base
 
 from app.core.config import settings
 
-DATABASE_URL = (
-    f"postgresql+psycopg://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}"
-    f"@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
-)
+
+def get_database_url() -> str:
+    if settings.DATABASE_URL:
+        return settings.DATABASE_URL.replace("postgresql://", "postgresql+psycopg://", 1)
+
+    return (
+        f"postgresql+psycopg://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}"
+        f"@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
+    )
+
+
+DATABASE_URL = get_database_url()
 
 engine = create_async_engine(DATABASE_URL, pool_pre_ping=True, echo=settings.DEBUG)
 

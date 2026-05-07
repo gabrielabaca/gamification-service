@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gamification Arcade Demo</title>
+    <link rel="stylesheet" href="/demo/static/styles.css" />
+  </head>
+  <body>
+    <main class="arcade-shell">
+      <section class="hero-card">
+        <div class="hero-copy">
+          <p class="eyebrow">Gamification Service</p>
+          <h1>Arcade de puntos y coins</h1>
+        </div>
+        <div class="hero-controls">
+          <div>
+            <span class="label">Personaje</span>
+            <div class="character-grid" id="characterGrid" aria-label="Selector de personaje"></div>
+          </div>
+          <div class="status-pill" id="connectionStatus">Sin conectar</div>
+        </div>
+      </section>
+
+      <section class="layout-grid">
+        <aside class="panel setup-panel">
+          <h2>Jugador</h2>
+          <label for="playerNameInput">Nombre</label>
+          <div class="input-row">
+            <input id="playerNameInput" type="text" autocomplete="name" spellcheck="false" placeholder="Ej: Lucio" />
+            <button id="newUserButton" type="button">Limpiar</button>
+          </div>
+          <small class="generated-id" id="generatedUserId">UUID generado al conectar.</small>
+          <button id="connectButton" class="primary-button" type="button">Conectar jugador</button>
+
+          <div class="help-card">
+            <strong>Controles</strong>
+            <span>Usa WASD, flechas o los botones tactiles.</span>
+            <strong>Mision:</strong>
+            <span>Recolecta cristales y evita monstruos.</span>
+          </div>
+
+          <div class="leaderboard-card">
+            <div class="section-title-row">
+              <h2>Ranking de Coins</h2>
+              <button id="refreshLeaderboardButton" type="button">Actualizar</button>
+            </div>
+            <ol class="leaderboard-list" id="leaderboardList">
+              <li class="empty-row">Conecta un jugador para ver el ranking.</li>
+            </ol>
+          </div>
+        </aside>
+
+        <section class="game-card">
+          <div class="arena" id="arena" tabindex="0" aria-label="Arena arcade">
+            <div class="game-topbar">
+              <div>
+                <span class="label">Tiempo</span>
+                <strong id="timeLeft">60s</strong>
+              </div>
+              <div>
+                <span class="label">Combo</span>
+                <strong id="comboValue">x1</strong>
+              </div>
+              <div>
+                <span class="label">Cristales</span>
+                <strong id="collectedValue">0</strong>
+              </div>
+            </div>
+            <img class="world" src="/assets/world.png" alt="" />
+            <img class="cloud cloud-one" src="/assets/cloud.png" alt="" />
+            <img class="cloud cloud-two" src="/assets/cloud.png" alt="" />
+            <img class="player" id="playerSprite" src="/assets/ale_1.png" alt="Personaje" />
+            <div class="collectible" id="collectible" aria-hidden="true"></div>
+            <div class="floating-layer" id="floatingLayer" aria-live="polite"></div>
+          </div>
+
+          <div class="mobile-controls" aria-label="Controles tactiles">
+            <button type="button" data-move="up">Arriba</button>
+            <div>
+              <button type="button" data-move="left">Izq.</button>
+              <button type="button" data-move="down">Abajo</button>
+              <button type="button" data-move="right">Der.</button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="panel score-panel">
+          <h2>Balance</h2>
+          <div class="score-grid">
+            <div>
+              <span>Puntos</span>
+              <strong id="pointsValue">0</strong>
+            </div>
+            <div>
+              <span>Coins</span>
+              <strong class="coin-balance">
+                <img src="/assets/coin.png" alt="" />
+                <span id="coinsValue">0</span>
+              </strong>
+            </div>
+          </div>
+
+          <div class="convert-card">
+            <label for="convertAmount">Puntos a convertir</label>
+            <input id="convertAmount" type="number" min="1" step="1" value="100" />
+            <button id="convertButton" class="primary-button" type="button">Convertir a coins</button>
+            <small id="convertHint">Tasa por defecto: 100 puntos = 1 coin.</small>
+          </div>
+
+          <div class="actions-row">
+            <button id="startButton" type="button">Iniciar partida</button>
+            <button id="soundButton" type="button">Sonido</button>
+          </div>
+
+          <h2>Actividad</h2>
+          <ol class="activity-log" id="activityLog"></ol>
+        </aside>
+      </section>
+    </main>
+
+    <audio id="arcadeSound" src="/assets/sound.mp3" loop preload="auto"></audio>
+    <script src="/demo/static/game.js" defer></script>
+  </body>
+</html>
